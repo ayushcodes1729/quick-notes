@@ -15,7 +15,7 @@
 ## 🛠️ Step 2: Design the homepage
 
 - [x] Create a homepage with “Create Note” button
-- [ ] Handle button click to navigate to `/note/[id]`
+- [x] Handle button click to navigate to `/note/[id]`
 
 ---
 
