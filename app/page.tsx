@@ -1,7 +1,9 @@
-import Image from "next/image";
+import { BentoGridDemo } from "./components/NotesGrid";
 
 export default function Home() {
   return (
-    <div>Hi there</div>
+    <div className="w-full ">
+      <BentoGridDemo/>
+    </div>
   );
 }

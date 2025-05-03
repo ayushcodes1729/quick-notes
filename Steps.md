@@ -14,7 +14,7 @@
 
 ## 🛠️ Step 2: Design the homepage
 
-- [ ] Create a homepage with “Create Note” button and input for existing note ID
+- [x] Create a homepage with “Create Note” button
 - [ ] Handle button click to navigate to `/note/[id]`
 
 ---
