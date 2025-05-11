@@ -29,8 +29,8 @@
 
 ## 🛠️ Step 4: Create API routes
 
-- [ ] Build API route to **get** a note by slug (`/api/note/[slug]`)
-- [ ] Build API route to **create/update** a note (`POST /api/note`)
+- [ ] Build API route to **get** a note by slug (`/api/notes/[slug]`)
+- [ ] Build API route to **create/update** a note (`POST /api/notes`)
 - [ ] Test API routes with Postman or from the app
 
 ---

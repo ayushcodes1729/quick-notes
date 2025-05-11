@@ -14,8 +14,17 @@ datasource db {
 }
 
 model Notes {
-  id        String @id @default(uuid())
+  id        String   @id @default(uuid())
   slug      String
+  title     String
   content   String
-  updatedAt String
+  updatedAt DateTime @updatedAt
 }
+
+// model Content {
+//   id     String  @id @default(uuid())
+//   title  String?
+//   text   String
+//   note   Notes   @relation(fields: [noteId], references: [id])
+//   noteId String  @unique
+// }
