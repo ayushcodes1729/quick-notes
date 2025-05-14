@@ -28,7 +28,7 @@ export const BentoGridItem = ({
   description,
   header,
 }: {
-  id? : number;
+  id? : String;
   className?: string;
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;

@@ -1,6 +1,6 @@
 'use client'
 import { cn } from "@/lib/utils";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 
 import {
@@ -13,12 +13,21 @@ import {
   IconTableColumn,
 } from "@tabler/icons-react";
 import axios from "axios";
+import { Notes } from "@prisma/client";
+import { useFeedStore } from "@/stores/feed-store";
 
 export function BentoGridDemo() {
-
+  const [items, setItems] = useState<Notes[]>([]);
+  const [hydrated, setHydrated] = useState(false);
+  const addFeed = useFeedStore((state)=> state.addFeed)
+  const feeds = useFeedStore((state)=> state.feeds)
+  console.log(feeds);
   async function fetchNotes() {
     try {
-      const notes = await axios.get("/api/notes");
+      const res = await axios.get("/api/notes");
+      const notes = res.data.data;
+      addFeed(notes);
+      setItems(notes);
       return notes;
     } catch (error) {
       console.log(error)
@@ -27,7 +36,8 @@ export function BentoGridDemo() {
   }
 
   useEffect(()=>{
-    const items = fetchNotes();
+    setHydrated(true);
+    fetchNotes();
   },[])
   return (
     <BentoGrid className="max-w-[1440px] py-10 mx-auto">
@@ -36,8 +46,8 @@ export function BentoGridDemo() {
           key={i}
           id={item.id}
           title={item.title}
-          description={item.description}
-          header={item.header}
+          description={item.content}
+          header={item.title}
           className={i === 3 || i === 6 ? "md:col-span-2" : ""}
         />
       ))}
@@ -50,30 +60,3 @@ const Skeleton = () => (
 
 
 let nextId:number = 1;
-// const items = [
-//   {
-//     id: nextId++,
-//     title: "The Dawn of Innovation",
-//     description: "Explore the birth of groundbreaking ideas and inventions.Explore the birth of groundbreaking ideas and inventionsExplore the birth of groundbreaking ideas and inventionsExplore the birth of groundbreaking ideas and inventionsExplore the birth of groundbreaking ideas and inventions",
-//     header: <Skeleton />,
-//   },
-//   {
-//     id: nextId++,
-//     title: "The Digital Revolution",
-//     description: "Dive into the transformative power of technology.",
-//     header: <Skeleton />,
-//   },
-//   {
-//     id: nextId++,
-//     title: "The Art of Design",
-//     description: "Discover the beauty of thoughtful and functional design.",
-//     header: <Skeleton />,
-//   },
-//   {
-//     id: nextId++,
-//     title: "The Power of Communication",
-//     description:
-//       "Understand the impact of effective communication in our lives.",
-//     header: <Skeleton />,
-//   },
-// ];

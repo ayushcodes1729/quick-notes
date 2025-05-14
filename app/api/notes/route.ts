@@ -9,7 +9,7 @@ const CreateNotesSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const notesData = CreateNotesSchema.parse(await req.json);
+    const notesData = CreateNotesSchema.parse(await req.json());
     const { title, content } = notesData;
     const slug = title.split(" ")[0];
 

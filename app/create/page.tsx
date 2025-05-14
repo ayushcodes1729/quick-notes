@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 
 export default function Create() {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [title, setTitle] = useState("")
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   function textAreaAdjust() {
@@ -16,34 +16,37 @@ export default function Create() {
     }
   }
 
-  function handleSave() {
-    const element = textAreaRef.current;
-    let timer;
-    clearTimeout(timer);
-    timer = setTimeout(async () => {
-      try {
-        await axios.post("/api/notes", {
-          title,
-          content
-        })
-      } catch (error) {
-        console.log(error)
-      }
-    }, 2000);
-    
+  async function handleSave() {
+    // const element = textAreaRef.current;
+    // let timer;
+    // clearTimeout(timer);
+    // timer = setTimeout(async () => {
+    try {
+      await axios.post("/api/notes", {
+        title: title,
+        content: content,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div className="py-10 px-10">
-        {/* //maybe better if put into a component */}
-      <form className="flex flex-col gap-10">
-        <Button className="w-fit" >Save</Button>
+      {/* //maybe better if put into a component */}
+      <form className="flex flex-col gap-10" onSubmit={(e)=>{
+        e.preventDefault();
+        handleSave()
+      }}>
+        <Button className="w-fit" type="submit">
+          Save
+        </Button>
         <input
           type="text"
           placeholder="Title"
           name="title"
           className="outline-none text-3xl w-full"
           value={title}
-          onChange={(e)=>setTitle(e.target.value)}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <textarea
           name="content"
@@ -52,7 +55,7 @@ export default function Create() {
           className="outline-none w-full resize-none"
           ref={textAreaRef}
           value={content}
-          onChange={(e)=>setContent(e.target.value)}
+          onChange={(e) => setContent(e.target.value)}
           onKeyUp={textAreaAdjust}
         ></textarea>
       </form>
