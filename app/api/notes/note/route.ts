@@ -42,7 +42,6 @@ export async function GET(req: NextRequest) {
       }
     );
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       {
         message: "Error while fetching notes",
@@ -116,5 +115,57 @@ export async function PATCH(req: NextRequest) {
           status: 400,
         }
       );
+  }
+}
+
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const id = req.nextUrl.searchParams.get("id");
+    if (!id) {
+      return NextResponse.json(
+        {
+          message: "Invalid Id",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+    const note = await prismaClient.notes.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!note) {
+      return NextResponse.json(
+        {
+          message: "Note not found",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        data: note,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        message: "Error while deleting notes",
+      },
+      {
+        status: 411,
+      }
+    );
   }
 }

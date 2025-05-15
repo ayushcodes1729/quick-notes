@@ -21,8 +21,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log(data);
-
     return NextResponse.json({
       data,
       message: "Note Created successfully",

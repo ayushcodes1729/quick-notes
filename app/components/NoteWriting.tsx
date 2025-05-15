@@ -2,18 +2,38 @@
 
 import { Button } from "@/components/ui/button";
 import { useNoteStore } from "@/stores/note-store";
+import { Notes } from "@prisma/client";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-export default function NoteWriting({
-  edit
-}: Readonly<{ edit: boolean; }>) {
-  const note = useNoteStore((state)=>state.note);
-  console.log(note?.title)
-
+export default function NoteWriting({ edit }: Readonly<{ edit: boolean }>) {
+  const noteFromStore = useNoteStore((state) => state.note);
+  const [note, setNote] = useState<Notes | null>(null);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [title, setTitle] = useState(note?.title || "");
-  const [content, setContent] = useState(note?.content || "");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (edit && noteFromStore) {
+      setNote(noteFromStore);
+      setTitle(noteFromStore.title);
+      setContent(noteFromStore.content);
+    } else {
+      const newNote = {
+        id: "",
+        slug: "",
+        title: "",
+        content: "",
+        updatedAt: new Date(),
+      };
+      setNote(newNote);
+      setTitle("");
+      setContent("");
+    }
+  }, [edit, noteFromStore]);
+
   function textAreaAdjust() {
     const element = textAreaRef.current;
     if (element) {
@@ -21,28 +41,30 @@ export default function NoteWriting({
       element.style.height = 25 + element.scrollHeight + "px";
     }
   }
-  console.log(edit);
-  console.log(title)
-  console.log(content)
+
   async function handleSave() {
-    // const element = textAreaRef.current;
-    // let timer;
-    // clearTimeout(timer);
-    // timer = setTimeout(async () => {
     try {
-      {
-        edit
-          ? await axios.patch(`/api/notes/note?id=${note?.id}`, {
-              newTitle: title ? title : "",
-              newContent: content ? content : "",
-            })
-          : await axios.post("/api/notes", {
-              title: title,
-              content: content,
-            });
+      if (edit) {
+        await axios.patch(`/api/notes/note?id=${note?.id}`, {
+          newTitle: title,
+          newContent: content,
+        });
+      } else {
+        await axios.post("/api/notes", {
+          title,
+          content,
+        });
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    }
+  }
+
+  async function handleDelete() {
+    try {
+      await axios.delete(`/api/notes/note?id=${note?.id}`);
+    } catch (error) {
+      console.error(error);
     }
   }
   return (
@@ -51,10 +73,14 @@ export default function NoteWriting({
       onSubmit={(e) => {
         e.preventDefault();
         handleSave();
+        router.push("/");
       }}
     >
       <Button className="w-fit" type="submit">
         Save
+      </Button>
+      <Button className="w-fit" onClick={handleDelete}>
+        Delete
       </Button>
       <input
         type="text"
