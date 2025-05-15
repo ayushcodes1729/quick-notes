@@ -61,7 +61,7 @@ const CreateNotesSchema = z.object({
 
 export async function PATCH(req: NextRequest) {
   try {
-    const newNote = CreateNotesSchema.parse(await req.json);
+    const newNote = CreateNotesSchema.parse(await req.json());
     const {newTitle, newContent} = newNote;
     const id = req.nextUrl.searchParams.get("id");
     if (!id) {
