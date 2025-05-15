@@ -26,7 +26,7 @@ export function BentoGridDemo() {
   useEffect(()=>{
     setHydrated(true);
     fetchNotes();
-  },[])
+  },[fetchNotes])
   return (
     <BentoGrid className="max-w-[1440px] py-10 mx-auto">
       {items.map((item, i) => (

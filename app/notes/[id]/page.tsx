@@ -25,7 +25,7 @@ export default function Notes() {
     useEffect(()=>{
       setHydrated(true);
       getNote();
-    },[])
+    },[getNote])
     
   return (
     <div className="py-10 px-10">
