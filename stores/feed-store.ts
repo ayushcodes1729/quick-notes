@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware"
 interface FeedState {
     feeds: Notes[] | null
     addFeed: (notes: Notes[]) => void
-    removeFeed: (notes: Notes[]) => void
+    removeFeed: (notes: Notes) => void
 }
 
 export const useFeedStore = create<FeedState>()(
@@ -14,7 +14,7 @@ export const useFeedStore = create<FeedState>()(
             {
                 feeds: null,
                 addFeed: (notes: Notes[]) => set((state)=>({feeds: notes})),
-                removeFeed: (notes: Notes[]) => set((state)=>({feeds: notes}))
+                removeFeed: (notes: Notes) => set((state)=>({feeds: state.feeds?.filter((e)=> e.id !== notes.id)}))
             }
         ),
         {

@@ -1,17 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useNoteStore } from "@/stores/note-store";
 import axios from "axios";
 import { useRef, useState } from "react";
 
 export default function NoteWriting({
-  edit,
-  prevTitle,
-  prevContent,
-}: Readonly<{ edit: boolean; prevTitle?: string; prevContent?: string }>) {
+  edit
+}: Readonly<{ edit: boolean; }>) {
+  const note = useNoteStore((state)=>state.note);
+  console.log(note?.title)
+
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [title, setTitle] = useState(edit ? prevTitle : "");
-  const [content, setContent] = useState(edit ? prevContent : "");
+  const [title, setTitle] = useState(note?.title || "");
+  const [content, setContent] = useState(note?.content || "");
   function textAreaAdjust() {
     const element = textAreaRef.current;
     if (element) {
@@ -19,6 +21,9 @@ export default function NoteWriting({
       element.style.height = 25 + element.scrollHeight + "px";
     }
   }
+  console.log(edit);
+  console.log(title)
+  console.log(content)
   async function handleSave() {
     // const element = textAreaRef.current;
     // let timer;
@@ -27,9 +32,9 @@ export default function NoteWriting({
     try {
       {
         edit
-          ? await axios.patch("/api/notes/note", {
-              title: title,
-              content: content,
+          ? await axios.patch(`/api/notes/note?id=${note?.id}`, {
+              newTitle: title ? title : "",
+              newContent: content ? content : "",
             })
           : await axios.post("/api/notes", {
               title: title,

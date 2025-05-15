@@ -29,15 +29,15 @@
 
 ## 🛠️ Step 4: Create API routes
 
-- [ ] Build API route to **get** a note by slug (`/api/notes/[slug]`)
-- [ ] Build API route to **create/update** a note (`POST /api/notes`)
-- [ ] Test API routes with Postman or from the app
+- [x] Build API route to **get** a note by slug (`/api/notes/[slug]`)
+- [x] Build API route to **create/update** a note (`POST /api/notes`)
+- [x] Test API routes with Postman or from the app
 
 ---
 
 ## 🛠️ Step 5: Build the note page (`/note/[slug]`)
 
-- [ ] Fetch note content on page load
+- [x] Fetch note content on page load
 - [ ] Display `<textarea>` that auto-saves on change
 - [ ] Send updates to API without a “Save” button
 
