@@ -7,11 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function Notes() {
     const searchParams = useSearchParams()
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
     const [hydrated, setHydrated] = useState(false)
-
-    const note = useNoteStore((state)=> state.note);
     const addNote = useNoteStore((state)=> state.addNote);
     const removeNote = useNoteStore((state)=> state.removeNote);
 

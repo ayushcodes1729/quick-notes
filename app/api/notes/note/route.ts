@@ -1,6 +1,5 @@
 import { prismaClient } from "@/app/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import { title } from "process";
 import { z } from "zod";
 
 export async function GET(req: NextRequest) {

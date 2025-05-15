@@ -1,17 +1,6 @@
 'use client'
-import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-
-import {
-  IconArrowWaveRightUp,
-  IconBoxAlignRightFilled,
-  IconBoxAlignTopLeft,
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
-} from "@tabler/icons-react";
 import axios from "axios";
 import { Notes } from "@prisma/client";
 import { useFeedStore } from "@/stores/feed-store";
@@ -53,9 +42,3 @@ export function BentoGridDemo() {
     </BentoGrid>
   );
 }
-const Skeleton = () => (
-  <div></div>
-);
-
-
-let nextId:number = 1;
