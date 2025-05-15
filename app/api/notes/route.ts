@@ -26,7 +26,14 @@ export async function POST(req: NextRequest) {
       message: "Note Created successfully",
     });
   } catch (error) {
-    console.log(error);
+    return NextResponse.json(
+      {
+        message: "Error happpend while adding notes",
+      },
+      {
+        status: 400,
+      }
+    );
   }
 }
 

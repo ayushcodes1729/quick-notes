@@ -106,7 +106,6 @@ export async function PATCH(req: NextRequest) {
     })
 
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
         {
           message: "Error while updating notes",
@@ -158,7 +157,6 @@ export async function DELETE(req: NextRequest) {
       }
     );
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       {
         message: "Error while deleting notes",

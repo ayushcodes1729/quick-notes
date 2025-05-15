@@ -16,12 +16,10 @@ export default function Notes() {
     const removeNote = useNoteStore((state)=> state.removeNote);
 
     const id = searchParams.get('id');
-    console.log(id);
     async function getNote(){
       try {
         removeNote();
         const res = await axios.get(`/api/notes/note?id=${id}`);
-        console.log(res.data.data)
         addNote(res.data.data);
       } catch (error) {
         console.log(error);

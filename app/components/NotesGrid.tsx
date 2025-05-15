@@ -21,7 +21,6 @@ export function BentoGridDemo() {
   const [hydrated, setHydrated] = useState(false);
   const addFeed = useFeedStore((state)=> state.addFeed)
   const feeds = useFeedStore((state)=> state.feeds)
-  console.log(feeds);
   async function fetchNotes() {
     try {
       const res = await axios.get("/api/notes");
